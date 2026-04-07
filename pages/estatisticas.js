@@ -151,4 +151,5 @@ export default function Estatisticas() {
 
           {/* Metas */}
           <div className="card mb-6 bg-gradient-to-r from-blue-50 to-purple-50">
-            <h2 className="text-2xl font-bold text-aviation-blue
+            <h2 className="text-2xl font-bold text-blue-800 mb-4">🎯 Suas Metas</h2>
+
