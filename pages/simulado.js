@@ -172,4 +172,9 @@ export default function Simulado() {
                 <div className="text-sm text-gray-600">Erros</div>
               </div>
 
-              <div className={`text-center p-4
+              <div className="text-center p-4 border-t">
+  <button onClick={proximaQuestao} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+    Próxima
+  </button>
+</div>
+
