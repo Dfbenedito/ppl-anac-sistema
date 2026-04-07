@@ -8,88 +8,32 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  scroll-behavior: smooth;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-}
-
-.btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+button {
   cursor: pointer;
-  transition: all 0.2s;
-  border: none;
 }
 
-.btn-primary {
-  background: #1E40AF;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #1E3A8A;
-}
-
-.btn-success {
-  background: #10B981;
-  color: white;
-}
-
-.btn-success:hover {
-  background: #059669;
-}
-
-.btn-danger {
-  background: #EF4444;
-  color: white;
-}
-
-.btn-danger:hover {
-  background: #DC2626;
-}
-
-.input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #E5E7EB;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.2s;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #1E40AF;
-}
-
-.progress-bar {
-  height: 24px;
-  background: #E5E7EB;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #10B981 0%, #059669 100%);
-  transition: width 0.3s ease;
+@layer utilities {
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 font-semibold transition;
+  }
 }
