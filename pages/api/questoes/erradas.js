@@ -1,40 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
-import jwt from 'jsonwebtoken'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-)
+import { connectToDatabase } from '../../../lib/mongodb'
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Método não permitido' })
-  }
-
-  const token = req.headers.authorization?.replace('Bearer ', '')
-  
-  if (!token) {
-    return res.status(401).json({ error: 'Não autorizado' })
+    return res.status(405).json({ message: 'Método não permitido' })
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const userId = req.query.userId || decoded.id
+    const { db } = await connectToDatabase()
+    const { userId } = req.query
 
-    // Buscar respostas erradas
-    const { data: respostasErradas, error: respostasError } = await supabase
-      .from('respostas')
-      .select('questao_id, resposta_usuario')
-      .eq('usuario_id', userId)
-      .eq('correta', false)
-
-    if (respostasError) throw respostasError
-
-    if (!respostasErradas || respostasErradas.length === 0) {
-      return res.status(200).json([])
+    if (!userId) {
+      return res.status(400).json({ message: 'userId é obrigatório' })
     }
 
-    // Buscar as questões correspondentes
-    const questoesIds = respostasErradas.map(r => r.questao_id)
-    
-    
+    // Buscar questões erradas do usuário
+    const questoesErradas = await db
+      .collection('respostas')
+      .find({ 
+        userId: userId,
+        correta: false 
+      })
+      .sort({ timestamp: -1 })
+      .limit(50)
+      .toArray()
+
+    res.status(200).json({ questoesErradas })
+  } catch (error) {
+    console.error('Erro ao buscar questões erradas:', error)
+    res.status(500).json({ message: 'Erro ao buscar questões erradas' })
+  }
+}
